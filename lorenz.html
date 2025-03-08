@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lorenz Attractor with Multiple Points, Trails, and Heads</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+    }
+    canvas {
+      border: 1px solid white;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="lorenzCanvas" width="800" height="600"></canvas>
+  <script>
+    // Constants for the Lorenz system
+    const sigma = 10;
+    const rho = 28;
+    const beta = 8 / 3;
+    const dt = 0.01; // Time step for numerical integration
+
+    // Canvas setup
+    const canvas = document.getElementById('lorenzCanvas');
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Scale factor for the attractor's coordinates
+    const scale = 10;
+
+    // Trail length
+    const trailLength = 10;
+
+    // LorenzAttractor class to handle each attractor point
+    class LorenzAttractor {
+      constructor(x, y, z, color) {
+        // Initial conditions for the attractor
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.trail = []; // Array to store the trail
+        this.color = color; // Unique color for each attractor
+      }
+
+      // Function to calculate Lorenz equations
+      lorenz(x, y, z) {
+        const dx = sigma * (y - x);
+        const dy = x * (rho - z) - y;
+        const dz = x * y - beta * z;
+        return [dx, dy, dz];
+      }
+
+      // Update the system using Euler's method
+      update() {
+        const [dx, dy, dz] = this.lorenz(this.x, this.y, this.z);
+        this.x += dx * dt;
+        this.y += dy * dt;
+        this.z += dz * dt;
+      }
+
+      // Map the Lorenz attractor points to canvas coordinates
+      mapToCanvas() {
+        const mappedX = width / 2 + this.x * scale;
+        const mappedY = height / 2 - this.y * scale;
+        return [mappedX, mappedY];
+      }
+
+      // Add a new point to the trail
+      addToTrail() {
+        const [mappedX, mappedY] = this.mapToCanvas();
+        this.trail.push([mappedX, mappedY]);
+
+        // If the trail exceeds the desired length, remove the oldest point
+        if (this.trail.length > trailLength) {
+          this.trail.shift();
+        }
+      }
+
+      // Draw the trail
+      drawTrail() {
+        ctx.strokeStyle = this.color; // Set the color of the trail
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+
+        for (let i = 0; i < this.trail.length; i++) {
+          const [trailX, trailY] = this.trail[i];
+          if (i === 0) {
+            ctx.moveTo(trailX, trailY);
+          } else {
+            ctx.lineTo(trailX, trailY);
+          }
+        }
+
+        ctx.stroke();
+      }
+
+      // Draw the head of the attractor (circle at the end of the trail)
+      drawHead() {
+        const [mappedX, mappedY] = this.mapToCanvas();
+        ctx.fillStyle = this.color; // Set the color of the head (same as the trail)
+        ctx.beginPath();
+        ctx.arc(mappedX, mappedY, 3, 0, Math.PI * 2); // Draw a circle at the head (radius = 3)
+        ctx.fill();
+      }
+    }
+
+    // Array to store multiple Lorenz attractor points
+    const attractors = [];
+
+    // Function to create new attractor points
+    function createAttractors(numberOfAttractors) {
+      for (let i = 0; i < numberOfAttractors; i++) {
+        // Random initial conditions for each attractor
+        const x = Math.random() * 2 - 1;  // Random x between -1 and 1
+        const y = Math.random() * 2 - 1;  // Random y between -1 and 1
+        const z = Math.random() * 2 - 1;  // Random z between -1 and 1
+        
+        // Generate a random color with variations of red and blue
+        const hue = Math.random() * 360; // Random hue (from 0 to 360 degrees)
+        const saturation = 100; // Full saturation
+        const lightness = 50; // Neutral lightness
+
+        // Adjust color towards red or blue based on hue
+        let color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+
+        attractors.push(new LorenzAttractor(x, y, z, color));
+      }
+    }
+
+    // Function to animate all attractors
+    function animate() {
+      // Clear the canvas
+      ctx.clearRect(0, 0, width, height);
+
+      // Update and draw each attractor
+      attractors.forEach(attractor => {
+        attractor.update();     // Update the Lorenz system
+        attractor.addToTrail(); // Add the new point to the trail
+        attractor.drawTrail();  // Draw the trail with its specific color
+        attractor.drawHead();   // Draw the head of the attractor (visible dot)
+      });
+
+      // Request the next frame
+      requestAnimationFrame(animate);
+    }
+
+    // Create a desired number of attractors
+    createAttractors(1000); // For example, create 50 attractors
+
+    // Start the animation
+    animate();
+  </script>
+</body>
+</html>
