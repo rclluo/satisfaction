@@ -12,11 +12,12 @@
     }
     canvas {
       display: block;
+      background-color: black;
     }
   </style>
 </head>
 <body>
-  <canvas id="swirlCanvas"></canvas>
+  <canvas id="swirlCanvas" width=100% height=100%></canvas>
 
   <script>
     const canvas = document.getElementById('swirlCanvas');
@@ -29,12 +30,12 @@
     const NUM_ARMS = 8;
     const MAX_RADIUS = 200.0;
     const THICKNESS = 10.0;
-    const NUM_SWIRLS = 32;
-    const WARP_MAX_ANGLE = Math.PI / 360;
+    const NUM_SWIRLS = 64;
+    const WARP_MAX_ANGLE = Math.PI / 120;
     const COLOR_CYCLE_MS = 8000;
     const FADE_FACTOR = 0.9;
     const swirlOrbitRadius = 50.0;
-    const swirlOrbitSpeed = 0.03;
+    const swirlOrbitSpeed = 0.003;
 
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
