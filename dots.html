@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swirl Effect</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="swirlCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('swirlCanvas');
+    const ctx = canvas.getContext('2d');
+    const WIDTH = 800;
+    const HEIGHT = 600;
+    const CENTER_X = WIDTH / 2;
+    const CENTER_Y = HEIGHT / 2;
+    const NUM_STARS = 64;
+    const NUM_ARMS = 8;
+    const MAX_RADIUS = 200.0;
+    const THICKNESS = 10.0;
+    const NUM_SWIRLS = 32;
+    const WARP_MAX_ANGLE = Math.PI / 360;
+    const COLOR_CYCLE_MS = 8000;
+    const FADE_FACTOR = 0.9;
+    const swirlOrbitRadius = 50.0;
+    const swirlOrbitSpeed = 0.03;
+
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+
+    class SwirlStar {
+      constructor(baseX, baseY, baseZ, baseHue) {
+        this.baseX = baseX;
+        this.baseY = baseY;
+        this.baseZ = baseZ;
+        this.baseHue = baseHue;
+      }
+    }
+
+    class Swirl {
+      constructor(centerX, centerY, speedX, speedY, speedZ) {
+        this.centerX = centerX;
+        this.centerY = centerY;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.speedZ = speedZ;
+        this.rotX = 0.0;
+        this.rotY = 0.0;
+        this.rotZ = 0.0;
+        this.stars = [];
+        this.generateSpiral();
+      }
+
+      generateSpiral() {
+        for (let i = 0; i < NUM_STARS; i++) {
+          const arm = Math.floor(Math.random() * NUM_ARMS);
+          const r = Math.sqrt(Math.random()) * MAX_RADIUS;
+          const baseArmAngle = (arm / NUM_ARMS) * 2.0 * Math.PI;
+          const twist = r * 0.8;
+          const noise = Math.random() * (Math.PI / 1000) - (Math.PI / 2000);
+          const angle = baseArmAngle + twist + noise;
+          const x = r * Math.cos(angle);
+          const y = r * Math.sin(angle);
+          const z = Math.random() * (THICKNESS / 2.0) - (THICKNESS / 2.0);
+          const hue = Math.floor(Math.random() * 256);
+          this.stars.push(new SwirlStar(x, y, z, hue));
+        }
+      }
+
+      draw(tiltAngle, hueOffset) {
+        for (const star of this.stars) {
+          let x = star.baseX;
+          let y = star.baseY;
+          let z = star.baseZ;
+
+          let y1 = y * Math.cos(this.rotX) - z * Math.sin(this.rotX);
+          let z1 = y * Math.sin(this.rotX) + z * Math.cos(this.rotX);
+          let x2 = x * Math.cos(this.rotY) + z1 * Math.sin(this.rotY);
+          let z2 = -x * Math.sin(this.rotY) + z1 * Math.cos(this.rotY);
+          let x3 = x2 * Math.cos(this.rotZ) - y1 * Math.sin(this.rotZ);
+          let y3 = x2 * Math.sin(this.rotZ) + y1 * Math.cos(this.rotZ);
+          let z3 = z2;
+
+          let yw = y3 * Math.cos(tiltAngle) - z3 * Math.sin(tiltAngle);
+          let zw = y3 * Math.sin(tiltAngle) + z3 * Math.cos(tiltAngle);
+
+          const finalX = x3 + this.centerX;
+          const finalY = yw + this.centerY;
+          const finalZ = zw;
+
+          const cameraDist = 100.0;
+          const depth = cameraDist - finalZ;
+          if (depth < 1.0) continue;
+          const scale = cameraDist / depth;
+          const projX = finalX * scale;
+          const projY = finalY * scale;
+
+          const screenX = Math.floor(CENTER_X + projX);
+          const screenY = Math.floor(CENTER_Y - projY);
+          if (screenX < 0 || screenX >= WIDTH || screenY < 0 || screenY >= HEIGHT) continue;
+
+          const baseRadius = Math.sqrt(x * x + y * y);
+          const brightness = Math.min(255.0 * (baseRadius / MAX_RADIUS), 255.0);
+
+          const hue = (star.baseHue + hueOffset) % 256;
+          const { r, g, b } = hsvToRgb(hue, 255, Math.floor(brightness));
+          ctx.beginPath();
+          ctx.arc(screenX, screenY, 2, 0, 2 * Math.PI);
+          ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+          ctx.fill();
+        }
+      }
+
+      update() {
+        this.rotX += this.speedX;
+        this.rotY += this.speedY;
+        this.rotZ += this.speedZ;
+      }
+    }
+
+    function hsvToRgb(h, s, v) {
+      const c = (v / 255) * (s / 255);
+      const x = c * (1 - Math.abs((h / 43) % 2 - 1));
+      const m = (v / 255) - c;
+      let r = 0, g = 0, b = 0;
+      if (0 <= h && h < 43) {
+        r = c; g = x; b = 0;
+      } else if (43 <= h && h < 86) {
+        r = x; g = c; b = 0;
+      } else if (86 <= h && h < 129) {
+        r = 0; g = c; b = x;
+      } else if (129 <= h && h < 172) {
+        r = 0; g = x; b = c;
+      } else if (172 <= h && h < 215) {
+        r = x; g = 0; b = c;
+      } else {
+        r = c; g = 0; b = x;
+      }
+      return { r: Math.floor((r + m) * 255), g: Math.floor((g + m) * 255), b: Math.floor((b + m) * 255) };
+    }
+
+    function mainLoop() {
+      const swirls = [];
+      for (let i = 0; i < NUM_SWIRLS; i++) {
+        const swirlX = Math.random() * 200 - 100;
+        const swirlY = Math.random() * 200 - 100;
+        const swirlSpeedX = Math.random() * 0.02 + 0.005;
+        const swirlSpeedY = Math.random() * 0.02 + 0.005;
+        const swirlSpeedZ = Math.random() * 0.02 + 0.005;
+        swirls.push(new Swirl(swirlX, swirlY, swirlSpeedX, swirlSpeedY, swirlSpeedZ));
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+        const warpPhase = (2.0 * Math.PI * Date.now() / 1000) % (Math.PI / 360);
+        const tiltAngle = WARP_MAX_ANGLE * Math.sin(warpPhase);
+
+        const timeHueOffset = Math.floor((Date.now() % COLOR_CYCLE_MS) * 256 / COLOR_CYCLE_MS);
+
+        for (const swirl of swirls) {
+          swirl.update();
+          swirl.draw(tiltAngle, timeHueOffset);
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    mainLoop();
+  </script>
+</body>
+</html>
