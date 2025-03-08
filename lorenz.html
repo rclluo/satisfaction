@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lorenz Swirl</title>
+  <title>Lorenz Attractor with Multiple Points, Trails, and Heads</title>
   <style>
     body {
       margin: 0;
@@ -14,14 +14,13 @@
       background-color: #000;
     }
     canvas {
-      background-color: #000;
       width: 100vw;
       height: 100vh;
     }
   </style>
 </head>
 <body>
-  <canvas id="lorenzCanvas"></canvas>
+  <canvas id="lorenzCanvas" width="800" height="600"></canvas>
   <script>
     // Constants for the Lorenz system
     const sigma = 10;
@@ -32,8 +31,8 @@
     // Canvas setup
     const canvas = document.getElementById('lorenzCanvas');
     const ctx = canvas.getContext('2d');
-    const width = 600;
-    const height = 800;
+    const width = canvas.width;
+    const height = canvas.height;
 
     // Scale factor for the attractor's coordinates
     const scale = 10;
