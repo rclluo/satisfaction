@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Cube</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+    }
+    
+    iframe {
+      width: 200px;
+      height: 200px;
+      border: none;
+      pointer-events: none;
+    }
+
+    a {
+       display: block; 
+       width: 200px; 
+       height: 200px; 
+       overflow:hidden;
+    }
+
+    .cube-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      transform-style: preserve-3d;
+      transform: rotateX(-30deg) rotateY(-30deg);
+      animation: rotate 5s infinite linear;
+      background-color: #000;
+    }
+
+    .cube-container > div {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .front { 
+      transform: translateZ(100px); 
+    }
+    .back { 
+      transform: rotateY(180deg) translateZ(100px); 
+    }
+    .left { 
+      transform: rotateY(-90deg) translateZ(100px); 
+    }
+    .right { 
+      transform: rotateY(90deg) translateZ(100px); 
+    }
+    .top { 
+      transform: rotateX(90deg) translateZ(100px); 
+    }
+    .bottom { 
+      transform: rotateX(-90deg) translateZ(100px); 
+    }
+
+    @keyframes rotate {
+      0% { transform: rotateX(-30deg) rotateY(0deg); }
+      100% { transform: rotateX(-30deg) rotateY(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="cube-container">
+    <div class="front">
+      <a href="swirl.html">
+        <iframe src="swirl.html"></iframe>
+      </a>
+    </div>
+    <div class="back">
+      <a href="lorenz.html">
+        <iframe src="lorenz.html"></iframe>
+      </a>
+    </div>
+    <div class="left">
+    </div>
+    <div class="right">
+    </div>
+    <div class="top"><p>Hello!</p></div>
+    <div class="bottom"><p>Hello!</p></div>
+  </div>
+</body>
+</html>
