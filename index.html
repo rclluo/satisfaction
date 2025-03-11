@@ -8,7 +8,6 @@
     body {
       margin: 0;
       padding: 0;
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -16,23 +15,23 @@
     }
     
     iframe {
-      width: 200px;
-      height: 200px;
+      width: 40vw;
+      height: 40vw;
       border: none;
       pointer-events: none;
     }
 
     a {
        display: block; 
-       width: 200px; 
-       height: 200px; 
+       width: 40vw; 
+       height: 40vw; 
        overflow:hidden;
     }
 
     .cube-container {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 40vw;
+      height: 40vw;
       transform-style: preserve-3d;
       transform: rotateX(-30deg) rotateY(-30deg);
       animation: rotate 5s infinite linear;
@@ -41,28 +40,28 @@
 
     .cube-container > div {
       position: absolute;
-      width: 200px;
-      height: 200px;
+      width: 40vw;
+      height: 40vw;
       background-color: rgba(0, 0, 0, 0.1);
     }
 
     .front { 
-      transform: translateZ(100px); 
+      transform: translateZ(20vw); 
     }
     .back { 
-      transform: rotateY(180deg) translateZ(100px); 
+      transform: rotateY(180deg) translateZ(20vw); 
     }
     .left { 
-      transform: rotateY(-90deg) translateZ(100px); 
+      transform: rotateY(-90deg) translateZ(20vw); 
     }
     .right { 
-      transform: rotateY(90deg) translateZ(100px); 
+      transform: rotateY(90deg) translateZ(20vw); 
     }
     .top { 
-      transform: rotateX(90deg) translateZ(100px); 
+      transform: rotateX(90deg) translateZ(20vw); 
     }
     .bottom { 
-      transform: rotateX(-90deg) translateZ(100px); 
+      transform: rotateX(-90deg) translateZ(20vw); 
     }
 
     @keyframes rotate {
