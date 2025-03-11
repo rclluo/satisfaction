@@ -12,6 +12,8 @@
       justify-content: center;
       align-items: center;
       background-color: #000;
+      overflow: hidden;
+      height: 100vh;
     }
     
     iframe {
@@ -22,10 +24,10 @@
     }
 
     a {
-       display: block; 
-       width: 40vw; 
-       height: 40vw; 
-       overflow:hidden;
+      display: block;
+      width: 40vw;
+      height: 40vw;
+      overflow: hidden;
     }
 
     .cube-container {
@@ -34,7 +36,7 @@
       height: 40vw;
       transform-style: preserve-3d;
       transform: rotateX(-30deg) rotateY(-30deg);
-      animation: rotate 5s infinite linear;
+      transition: transform 0.1s ease-out; /* Smooth transition for better feel */
       background-color: #000;
     }
 
@@ -43,6 +45,7 @@
       width: 40vw;
       height: 40vw;
       background-color: rgba(0, 0, 0, 0.1);
+      border: 1px solid #fff;
     }
 
     .front { 
@@ -63,31 +66,104 @@
     .bottom { 
       transform: rotateX(-90deg) translateZ(20vw); 
     }
-
-    @keyframes rotate {
-      0% { transform: rotateX(-30deg) rotateY(0deg); }
-      100% { transform: rotateX(-30deg) rotateY(360deg); }
-    }
   </style>
 </head>
 <body>
   <div class="cube-container">
     <div class="front">
-      <a href="swirl.html">
-        <iframe src="swirl.html"></iframe>
+      <a href="lorenz.html">
+        <iframe src="lorenz.html"></iframe>
       </a>
     </div>
     <div class="back">
-      <a href="lorenz.html">
-        <iframe src="lorenz.html"></iframe>
+      <a href="swirl.html">
+        <iframe src="swirl.html"></iframe>
       </a>
     </div>
     <div class="left">
     </div>
     <div class="right">
     </div>
-    <div class="top"><p>Hello!</p></div>
-    <div class="bottom"><p>Hello!</p></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
   </div>
+
+  <script>
+    const cube = document.querySelector('.cube-container');
+    let isMouseDown = false;
+    let lastX = 0;
+    let lastY = 0;
+    let rotationX = -30;
+    let rotationY = -30;
+
+    // Variables for momentum
+    let velocityX = 0;
+    let velocityY = 0;
+    let friction = 0.95; // How quickly the momentum slows down
+
+    // Mouse down event to track dragging
+    document.addEventListener('mousedown', (e) => {
+      isMouseDown = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      document.body.style.cursor = 'grabbing'; // Change cursor to grabbing
+      velocityX = 0; // Reset velocity when starting to drag
+      velocityY = 0;
+    });
+
+    // Mouse up event to stop tracking dragging and apply momentum
+    document.addEventListener('mouseup', () => {
+      isMouseDown = false;
+      document.body.style.cursor = 'grab'; // Reset cursor to grab
+    });
+
+    // Mouse move event to rotate the cube and track velocity
+    document.addEventListener('mousemove', (e) => {
+      if (isMouseDown) {
+        const deltaX = e.clientX - lastX;
+        const deltaY = e.clientY - lastY;
+
+        rotationX += deltaY * 0.3; // Adjust sensitivity of X-axis
+        rotationY += deltaX * 0.3; // Adjust sensitivity of Y-axis
+
+        // Update rotation and velocity
+        velocityX = deltaX; // Track velocity for momentum
+        velocityY = deltaY;
+
+        // Set new rotation
+        cube.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+
+        lastX = e.clientX;
+        lastY = e.clientY;
+      }
+    });
+
+    // Update the rotation with momentum after mouse stop
+    function applyMomentum() {
+      if (!isMouseDown) {
+        rotationX += velocityY * 0.3; // Apply momentum to X rotation
+        rotationY += velocityX * 0.3; // Apply momentum to Y rotation
+
+        // Apply the new rotation to the cube
+        cube.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+
+        // Reduce the velocity gradually (simulate friction)
+        velocityX *= friction;
+        velocityY *= friction;
+
+        // If the velocity is small enough, stop the momentum
+        if (Math.abs(velocityX) < 0.01 && Math.abs(velocityY) < 0.01) {
+          velocityX = 0;
+          velocityY = 0;
+        }
+      }
+
+      // Continue to apply momentum until it decelerates enough
+      requestAnimationFrame(applyMomentum);
+    }
+
+    // Start applying momentum after the mouse is released
+    requestAnimationFrame(applyMomentum);
+  </script>
 </body>
 </html>
