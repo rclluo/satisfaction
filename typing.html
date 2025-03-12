@@ -45,7 +45,6 @@
   <textarea class="typing-area" id="typing-area" placeholder="Type the text here..."></textarea>
   <button id="submit-button" onclick="
     typingArea.readOnly=true;
-    typingArea.value='';
     submitButton.disabled=true;
     getButton.disabled=false;
     timerOn=false;
@@ -53,18 +52,12 @@
   <textarea class="text-display" id="sample-area" placeholder="Text will show up here..." readonly></textarea>
   <button id="get-button" onclick="
     typingArea.readOnly=false;    
+    typingArea.value='';
     submitButton.disabled=false;
     getButton.disabled=true;
     timerOn=true;
   ">Get Text!</button>
   <p id="timer">Time will show here...</p>
-  <div>
-    <svg width="100" height="50" xmlns="http://www.w3.org/2000/svg">
-      <rect x="5" y="5" width="90" height="40" rx="7" ry="7" fill="green" stroke="darkgreen" stroke-width="5"/>
-      <text x="50%" y="50%" font-size="20" fill="white" text-anchor="middle" alignment-baseline="middle">$</text>
-    </svg>
-    <span>0</span>
-  </div>
   <script>
     function levenshtein(s, t) {
       if (s === t) {
