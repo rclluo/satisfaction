@@ -104,7 +104,7 @@ var currTime=0;
 setInterval(() => {
   if (timerOn) {
     currTime=(Math.round((Date.now()-startTime)/10)/100).toFixed(2);
-    timer.innerHTML=currTime
+    timer.innerHTML=currTime;
   } else {
     startTime=Date.now();
   }
