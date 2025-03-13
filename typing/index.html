@@ -6,7 +6,7 @@
     $
     <span id="money">0</span>
   </div>
-  <textarea class="typing-area" id="typing-area" placeholder="Type the text here..."></textarea>
+  <textarea id="typing-area" placeholder="Type the text here..."></textarea>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
@@ -28,9 +28,9 @@
     // 200s - 150s -> -25%
     // 200+s       -> -50%
   ">Submit Text!</button>
-  <textarea class="text-display" id="sample-area" placeholder="Text will show up here..." readonly></textarea>
+  <textarea id="text-display" placeholder="Text will show up here..." readonly></textarea>
   <script>
-    document.getElementById('sample-area').style.pointerEvents='none';
+    document.getElementById('text-display').style.pointerEvents='none';
   </script>
   <button id="get-button" onclick="
     typingArea.readOnly=false;    
