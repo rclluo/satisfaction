@@ -1,6 +1,6 @@
 <head>
   <style>
-    textarea, button, div, p, span {
+    textarea, button, div, p {
       font-family: Arial, Helvetica, sans-serif;
       width: 80%;
       margin-left: auto;
@@ -34,20 +34,20 @@
     p {
       text-align: center;
     }
-    svg {
-      display: inline;
-      position: relative;
-      top: 3em;
-    }
   </style>
 </head>
 <body>
+  <div>
+    $
+    <span>0</span>
+  </div>
   <textarea class="typing-area" id="typing-area" placeholder="Type the text here..."></textarea>
   <button id="submit-button" onclick="
     typingArea.readOnly=true;
     submitButton.disabled=true;
     getButton.disabled=false;
     timerOn=false;
+    
   ">Submit Text!</button>
   <textarea class="text-display" id="sample-area" placeholder="Text will show up here..." readonly></textarea>
   <button id="get-button" onclick="
@@ -56,8 +56,11 @@
     submitButton.disabled=false;
     getButton.disabled=true;
     timerOn=true;
+    sampleArea.value=texts.random()
+    typingArea.focus()
   ">Get Text!</button>
   <p id="timer">Time will show here...</p>
+  <script src="texts.js"></script>
   <script>
     function levenshtein(s, t) {
       if (s === t) {
@@ -160,12 +163,17 @@
     var timer=document.getElementById('timer');
     var timerOn=false;
     var startTime=Date.now();
+    var currTime=0;
     setInterval(() => {
       if (timerOn) {
-        timer.innerHTML=(Math.round((Date.now()-startTime)/10)/100).toFixed(2);
+        currTime=(Math.round((Date.now()-startTime)/10)/100).toFixed(2);
+        timer.innerHTML=currTime
       } else {
         startTime=Date.now()
       }
     }, 20);
+    Array.prototype.random = function () {
+      return this[Math.floor((Math.random()*this.length))];
+    }
   </script>
 </body>
