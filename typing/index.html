@@ -42,6 +42,15 @@
     <span id="money">0</span>
   </div>
   <textarea class="typing-area" id="typing-area" placeholder="Type the text here..."></textarea>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#typing-area').on("paste", function (e) {
+        e.preventDefault();
+        alert("Heyyyyy... No cheating!");
+      });
+    });
+  </script>
   <button id="submit-button" onclick="
     typingArea.readOnly=true;
     submitButton.disabled=true;
