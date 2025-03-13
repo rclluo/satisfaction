@@ -92,6 +92,9 @@ function levenshtein(s, t) {
 
   return h;
 }
+function swapStyleSheet(sheet) {
+    document.getElementById("pagestyle").setAttribute("href", sheet);  
+}
 var typingArea=document.getElementById('typing-area');
 var sampleArea=document.getElementById('sample-area');
 var submitButton=document.getElementById('submit-button');
