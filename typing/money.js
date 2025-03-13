@@ -1,5 +1,5 @@
 var money=parseInt(localStorage.getItem('money'));
-if (money==undefined) {
+if (isNaN(money)) {
   money=0;
 }
 setInterval(() => {
