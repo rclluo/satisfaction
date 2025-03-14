@@ -27,6 +27,9 @@
     // 125s - 150s -> -10%
     // 200s - 150s -> -25%
     // 200+s       -> -50%
+    let longer=Math.max(typingArea.value.length,sampleArea.value.length);
+    let accuracy=(longer-levenshtein(typingArea.value,sampleArea.value))/longer;
+    alert(accuracy);
   ">Submit Text!</button>
   <textarea id="sample-area" placeholder="Text will show up here..." readonly></textarea>
   <script>
