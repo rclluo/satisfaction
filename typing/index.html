@@ -30,7 +30,7 @@
     let longer=Math.max(typingArea.value.length,sampleArea.value.length);
     resultChar.innerHTML=longer;
     let accuracy=(longer-levenshtein(typingArea.value,sampleArea.value))/longer;
-    resultAcc.innerHTML=accuracy;
+    resultAcc.innerHTML=accuracy*100;
     resultTime.innerHTML=currTime;
     if (currTime<80) {
       let timeBonus=0.5;
