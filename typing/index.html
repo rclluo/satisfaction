@@ -28,7 +28,7 @@
     // 200s - 225s -> -25%
     // 225+s       -> -50%
     let longer=Math.max(typingArea.value.length,sampleArea.value.length);
-    resultChars.innerHTML=longer;
+    resultChar.innerHTML=longer;
     let accuracy=(longer-levenshtein(typingArea.value,sampleArea.value))/longer;
     resultAcc.innerHTML=accuracy;
     resultTime.innerHTML=currTime;
