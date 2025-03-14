@@ -30,7 +30,7 @@
     let longer=Math.max(typingArea.value.length,sampleArea.value.length);
     resultChar.innerHTML=longer;
     let accuracy=(longer-levenshtein(typingArea.value,sampleArea.value))/longer;
-    resultAcc.innerHTML=accuracy*100;
+    resultAcc.innerHTML=Math.round(accuracy*100);
     resultTime.innerHTML=currTime;
     let timeBonus=0;
     if (currTime<80) {
@@ -47,7 +47,7 @@
       timeBonus=-0.5;
     }
     resultTimeBonus.innerHTML=timeBonus*100;
-    let moneyEarned=longer*accuracy*(1+timeBonus)
+    let moneyEarned=Math.round(100*longer*accuracy*(1+timeBonus))/100;
     resultMoney.innerHTML=moneyEarned;
     changeMoney(moneyEarned)
   ">Submit Text!</button>
