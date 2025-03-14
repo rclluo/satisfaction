@@ -17,23 +17,32 @@ textarea, button, div, p {
   color: #444;
   user-select: none;
 }
+
+div {
+  transition: height 1s;
+}
+
 textarea {
   height: 20%;
   resize: none;
 }
+
 button {
   height: 50px;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
 }
+
 button:active {
   border: 2px solid #f8f8f8;
   background-color: #bbb;
 }
+
 button:disabled {
   border: 2px solid #f8f8f8;
   background-color: #bbb;
 }
+
 p {
   text-align: center;
 }
