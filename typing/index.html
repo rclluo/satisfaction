@@ -32,15 +32,17 @@
     let time=currTime;
     changeMoney(longer*accuracy)
   ">Submit Text!</button>
-  <div style="height: 0">
+  <div style="height: 0;">
     <br>
-    Characters typed: <span>0</span>
+    Characters typed: <span id="results-chars">0</span>
     <br>
-    Time taken: <span>0</span>
+    Time taken: <span id="results-time">0</span>s
     <br>
-    Accuracy: <span class>0</span>
+    Time bonus: <span id="results-bonus">0</span>%
     <br>
-    Money earned: <span>0</span>
+    Accuracy: <span id="results-acc">0</span>%
+    <br>
+    Money earned: $<span id="results-money">0</span>
   </div>
   <textarea id="sample-area" placeholder="Text will show up here..." readonly></textarea>
   <script>
