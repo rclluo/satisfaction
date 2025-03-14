@@ -2,7 +2,7 @@ body {
   background-color: #fff;
 }
 
-textarea, button, div, p, span {
+textarea, button, div, p {
   font-family: Arial, Helvetica, sans-serif;
   width: 80%;
   margin-left: auto;
@@ -36,7 +36,4 @@ button:disabled {
 }
 p {
   text-align: center;
-}
-.half {
-  width: 50%;
 }
