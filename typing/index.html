@@ -28,8 +28,13 @@
     // 200s - 150s -> -25%
     // 200+s       -> -50%
     let longer=Math.max(typingArea.value.length,sampleArea.value.length);
+    resultChars.innerHTML=longer;
     let accuracy=(longer-levenshtein(typingArea.value,sampleArea.value))/longer;
-    let time=currTime;
+    resultAcc.innerHTML=accuracy;
+    resultTime.innerHTML=currTime;
+    if (currTime<80) {
+      let timeBonus
+    }
     changeMoney(longer*accuracy)
   ">Submit Text!</button>
   <div style="height: 0;">

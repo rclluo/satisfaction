@@ -101,6 +101,7 @@ var submitButton=document.getElementById('submit-button');
 var getButton=document.getElementById('get-button');
 var timer=document.getElementById('timer');
 var moneyDisplay=document.getElementById('money');
+var resultChar=document.getElementById('results-chars');
 var resultTime=document.getElementById('results-time');
 var resultTimeBonus=document.getElementById('results-bonus');
 var resultAcc=document.getElementById('results-acc');
