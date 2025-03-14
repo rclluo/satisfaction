@@ -25,19 +25,32 @@
     // 80s  - 100s -> +25%
     // 100s - 125s -> +10%
     // 125s - 150s -> -10%
-    // 200s - 150s -> -25%
-    // 200+s       -> -50%
+    // 200s - 225s -> -25%
+    // 225+s       -> -50%
     let longer=Math.max(typingArea.value.length,sampleArea.value.length);
     resultChars.innerHTML=longer;
     let accuracy=(longer-levenshtein(typingArea.value,sampleArea.value))/longer;
     resultAcc.innerHTML=accuracy;
     resultTime.innerHTML=currTime;
     if (currTime<80) {
-      let timeBonus
+      let timeBonus=0.5;
+    } else if (currTime<100) {
+      let timeBonus=0.25;
+    } else if (currTime<125) {
+      let timeBonus=0.1;
+    } else if (currTime<150) {
+      let timeBonus=-0.1;
+    } else if (currTime<225) {
+      let timeBonus=-0.25;
+    } else {
+      let timeBonus=-0.5;
     }
-    changeMoney(longer*accuracy)
+    resultBonus.innerHTML=timeBonus*100;
+    let moneyEarned=longer*accuracy*(1+timeBonus)
+    resultMoney.innerHTML=moneyEarned;
+    changeMoney(moneyEarned)
   ">Submit Text!</button>
-  <div style="height: 0;">
+  <div style="height: 150;">
     <br>
     Characters typed: <span id="results-chars">0</span>
     <br>
