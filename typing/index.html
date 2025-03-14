@@ -49,9 +49,10 @@
     resultTimeBonus.innerHTML=timeBonus*100;
     let moneyEarned=Math.round(100*longer*accuracy*(1+timeBonus))/100;
     resultMoney.innerHTML=moneyEarned;
-    changeMoney(moneyEarned)
+    changeMoney(moneyEarned);
+    resultDisplay.setAttribute('style','height: 150;');
   ">Submit Text!</button>
-  <div style="height: 150;">
+  <div id="results-display" style="height: 0;">
     <br>
     Characters typed: <span id="results-chars">0</span>
     <br>
@@ -75,6 +76,7 @@
     timerOn=true;
     sampleArea.value=texts.random();
     typingArea.focus();
+    resultDisplay.setAttribute('style','height: 0;');
   ">Get Text!</button>
   <p id="timer">Time will show here...</p>
   <script src="texts.js"></script>

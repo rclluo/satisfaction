@@ -106,6 +106,7 @@ var resultTime=document.getElementById('results-time');
 var resultTimeBonus=document.getElementById('results-bonus');
 var resultAcc=document.getElementById('results-acc');
 var resultMoney=document.getElementById('results-money');
+var resultDisplay=document.getElementById('results-display')
 var timerOn=false;
 var startTime=Date.now();
 var currTime=0;
