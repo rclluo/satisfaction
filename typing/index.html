@@ -32,18 +32,19 @@
     let accuracy=(longer-levenshtein(typingArea.value,sampleArea.value))/longer;
     resultAcc.innerHTML=accuracy*100;
     resultTime.innerHTML=currTime;
+    let timeBonus=0;
     if (currTime<80) {
-      let timeBonus=0.5;
+      timeBonus=0.5;
     } else if (currTime<100) {
-      let timeBonus=0.25;
+      timeBonus=0.25;
     } else if (currTime<125) {
-      let timeBonus=0.1;
+      timeBonus=0.1;
     } else if (currTime<150) {
-      let timeBonus=-0.1;
+      timeBonus=-0.1;
     } else if (currTime<225) {
-      let timeBonus=-0.25;
+      timeBonus=-0.25;
     } else {
-      let timeBonus=-0.5;
+      timeBonus=-0.5;
     }
     resultTimeBonus.innerHTML=timeBonus*100;
     let moneyEarned=longer*accuracy*(1+timeBonus)
