@@ -1,0 +1,32 @@
+textarea, button, div, p {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  display: block;
+  font-size: 16px;
+}
+
+div {
+  transition: height 1s;
+  overflow: hidden;
+}
+
+textarea {
+  height: 20%;
+  resize: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+button {
+  height: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+p {
+  text-align: center;
+}
