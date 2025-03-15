@@ -3,13 +3,15 @@ function end() {
   submitButton.disabled=true;
   getButton.disabled=false;
   timerOn=false;
-  // 120+      -> +50%
-  // 100 - 120 -> +25%
-  // 80  - 100 -> +10%
-  // 60  - 80  -> +0%
-  // 40  - 60  -> -10%
-  // 30  - 40  -> -25%
-  // 30-       -> -50%
+  // 200+      -> +150%
+  // 150 - 200 -> +100%
+  // 120 - 150 -> +75%
+  // 100 - 120 -> +50%
+  // 80  - 100 -> +25%
+  // 60  - 80  -> +10%
+  // 45  - 60  -> +0%
+  // 30  - 45  -> -10%
+  // 30-       -> -25%
   let longer=Math.max(typingArea.value.length,sampleArea.value.length);
   resultChar.innerHTML=longer;
   let accuracy=(longer-levenshtein(typingArea.value,sampleArea.value))/longer;
@@ -17,20 +19,24 @@ function end() {
   let speed=typingArea.value.length*12/currTime
   resultWPM.innerHTML=speed;
   let speedBonus=0;
-  if (speed<20) {
-    speedBonus=-0.5;
-  } else if (speed<40) {
+  if (speed<30) {
     speedBonus=-0.25;
-  } else if (speed<60) {
+  } else if (speed<45) {
     speedBonus=-0.1;
-  } else if (speed<80) {
+  } else if (speed<60) {
     speedBonus=0;
-  } else if (speed<100) {
+  } else if (speed<80) {
     speedBonus=0.1;
-  } else if (speed<120) {
+  } else if (speed<100) {
     speedBonus=0.25;
+  } else if (speed<120) {
+    speedBonus=0.5;
+  } else if (speed<150) {
+    speedBonus=0.75;
+  } else if (speed<200) {
+    speedBonus=1;
   } else {
-    speedBonus=0.5
+    speedBonus=1.5;
   }
   resultBonus.innerHTML=speedBonus*100;
   let moneyEarned=Math.round(100*longer*accuracy*(1+speedBonus))/100;
