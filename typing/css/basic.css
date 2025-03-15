@@ -17,13 +17,6 @@ div {
 textarea {
   height: 20%;
   resize: none;
-  user-select: none;
-  pointer-events: none;
-  display: grid;
-  grid: stack;
-  > *, &::after {
-    grid-area: stack;
-  }
 }
 
 button {
