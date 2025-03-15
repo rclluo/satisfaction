@@ -3,7 +3,7 @@ body {
 }
 
 textarea, button, div, p {
-  font-family: Times New Roman, Times, serif;
+  font-family: 'Courier New', monospace;
   border: 2px solid #444;
   background-color: #111;
   color: #0f0;
