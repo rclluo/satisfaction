@@ -15,7 +15,6 @@ textarea, button, div, p {
   display: block;
   font-size: 16px;
   color: #444;
-  user-select: none;
 }
 
 div {
@@ -26,6 +25,8 @@ div {
 textarea {
   height: 20%;
   resize: none;
+  user-select: none;
+  pointer-events: none;
 }
 
 button {
