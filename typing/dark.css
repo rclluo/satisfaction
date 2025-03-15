@@ -1,0 +1,20 @@
+body {
+  background-color: #000;
+}
+
+textarea, button, div, p {
+  font-family: Arial, Helvetica, sans-serif;
+  border: 2px solid #444;
+  background-color: #070707;
+  color: #bbb;
+}
+
+button:active {
+  border: 2px solid #070707;
+  background-color: #444;
+}
+
+button:disabled {
+  border: 2px solid #070707;
+  background-color: #444;
+}
