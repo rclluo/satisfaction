@@ -15,7 +15,7 @@ div {
 }
 
 textarea {
-  height: auto;
+  height: 20%;
   resize: none;
   user-select: none;
   pointer-events: none;
