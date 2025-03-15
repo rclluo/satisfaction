@@ -50,7 +50,7 @@ function start() {
   submitButton.disabled=false;
   getButton.disabled=true;
   timerOn=true;
-  sampleArea.value=texts.random();
+  sampleArea.value=easyTexts.random();
   typingArea.focus();
   resultDisplay.setAttribute('style','height: 0;');
 }
